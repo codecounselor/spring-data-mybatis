@@ -6,7 +6,6 @@ import org.springframework.util.Assert;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,8 +15,8 @@ import java.util.Map;
  */
 public class SimpleMyBatisRepository<T, ID extends Serializable> implements MyBatisRepository<T, ID> {
 	
-	private final SqlSessionTemplate sessionTemplate;
-	private final String mappedStatementId;
+	protected final SqlSessionTemplate sessionTemplate;
+	protected final String mappedStatementId;
 	
 	public SimpleMyBatisRepository(SqlSessionTemplate sessionTemplate, String mappedStatementNamespace) {
 		Assert.notNull(sessionTemplate, "SqlSessionTemplate must not be null!");
@@ -34,7 +33,7 @@ public class SimpleMyBatisRepository<T, ID extends Serializable> implements MyBa
 	}
 
 	@Override
-	public List<T> findAll() {
+	public Iterable<T> findAll() {
 		Map<String, ID> params = new HashMap<>();
 		return sessionTemplate.selectList(mappedStatementId, params);
 	}
@@ -46,9 +45,9 @@ public class SimpleMyBatisRepository<T, ID extends Serializable> implements MyBa
 
 	@Override
 	public long count() {
-		return findAll().size();
+		//FIXME: query for count, don't pull all the results back
+		Map<String, ID> params = new HashMap<>();
+		return sessionTemplate.selectList(mappedStatementId, params).size();
 	}
-	
-	
 
 }

@@ -34,7 +34,25 @@
 			AND customer.id = #{pk.value}
 		</if>
 	</select>
-	
+
+	<select id="findAllList" resultMap="customerResultMap">
+		SELECT customer.id id,
+		customer.first_name first_name,
+		customer.last_name last_name,
+		customer.email_address email_adress,
+		address.id address_id,
+		address.street address_street,
+		address.city
+		address_city,
+		address.country address_country
+		FROM
+		customer, address
+		WHERE customer.id = address.customer_id
+		<if test="pk">
+			AND customer.id = #{pk.value}
+		</if>
+	</select>
+
 	<select id="findByFirstName" resultMap="customerResultMap" parameterType="string">
 		SELECT customer.id id,
 		customer.first_name first_name,

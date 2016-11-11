@@ -23,8 +23,7 @@ public class MyBatisQuery implements RepositoryQuery {
 
 	@Override
 	public Object execute(Object[] parameters) {
-		return ReflectionUtils
-				.invokeMethod(queryMethod.getMethod(), sessionTemplate.getMapper(queryMethod.getRepositoryInterface()), parameters);
+		return ReflectionUtils.invokeMethod(queryMethod.getMethod(), sessionTemplate.getMapper(queryMethod.getRepositoryInterface()), parameters);
 	}
 
 	@Override

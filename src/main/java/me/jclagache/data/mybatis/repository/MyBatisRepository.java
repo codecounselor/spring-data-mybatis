@@ -4,7 +4,6 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * MyBatis specific extension of {@link org.springframework.data.repository.Repository}.
@@ -28,7 +27,7 @@ public interface MyBatisRepository<T, ID extends Serializable> extends Repositor
 	 * 
 	 * @return all entities
 	 */
-	List<T> findAll();
+	Iterable<T> findAll();
 	
 	/**
 	 * Returns whether an entity with the given id exists.

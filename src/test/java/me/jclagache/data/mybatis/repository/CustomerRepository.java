@@ -2,6 +2,8 @@ package me.jclagache.data.mybatis.repository;
 
 import org.apache.ibatis.annotations.Select;
 import me.jclagache.data.mybatis.domain.Customer;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -9,9 +11,11 @@ import java.util.List;
  * Mapping and queries defined in mapper/Customer/Customer.xml
  * except me.jclagache.data.mybatis.repository.CustomerRepository#findByLastName(java.lang.String)
  */
-public interface CustomerRepository extends MyBatisRepository<Customer, Integer> {
+public interface CustomerRepository extends MyBatisPagingAndSortingRepository<Customer, Integer> {
 
 	List<Customer> findByFirstName(String firstName);
+
+	List<Customer> findAllList(PageRequest pageRequest);
 
 	/**
 	 *

@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import me.jclagache.data.mybatis.ApplicationConfig;
 import me.jclagache.data.mybatis.domain.Customer;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -29,9 +31,20 @@ public class CustomerRepositoryTest {
 	
 	@Test
 	public void testFindAllCustomers() {
-		List<Customer> customers = customerRepository.findAll();
+		Iterable<Customer> customers = customerRepository.findAll();
 		assertNotNull(customers);
-		assertTrue(customers.size() > 0);
+		assertTrue(customers.iterator().hasNext());
+	}
+
+	@Test
+	public void testFindAllCustomers_Paged() {
+		PageRequest pageRequest = new PageRequest(1, 1);
+		//TODO: Find out why this throws an exception when the pageRequest is passed
+		//TODO: should attach to the find mapping, and not need an distinct mapper definition
+		Iterable<Customer> customers = customerRepository.findAllList(pageRequest);
+		assertNotNull(customers);
+		assertTrue(customers.iterator().hasNext());
+		assertFalse(customers.iterator().hasNext());
 	}
 	
 	@Test
