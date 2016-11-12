@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import me.jclagache.data.mybatis.ApplicationConfig;
 import me.jclagache.data.mybatis.domain.Customer;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,9 +41,9 @@ public class CustomerRepositoryTest {
 	@Test
 	public void testFindAllCustomers_Paged() {
 		PageRequest pageRequest = new PageRequest(1, 1);
-		//TODO: Find out why this throws an exception when the pageRequest is passed
-		//TODO: should attach to the find mapping, and not need an distinct mapper definition
-		Iterable<Customer> customers = customerRepository.findAllList(pageRequest);
+		//TODO: would be nice to attach to the find mapping, and not need an distinct mapper definition
+		// Don't know if its possible because MyBatis doesn't like Page vs List for return type
+		List<Customer> customers = customerRepository.findAllList(pageRequest);
 		assertNotNull(customers);
 		Iterator<Customer> it = customers.iterator();
 		it.next();

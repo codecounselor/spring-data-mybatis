@@ -1,9 +1,7 @@
 package me.jclagache.data.mybatis.repository;
 
-import org.apache.ibatis.annotations.Select;
 import me.jclagache.data.mybatis.domain.Customer;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -14,8 +12,6 @@ import java.util.List;
 public interface CustomerRepository extends MyBatisPagingAndSortingRepository<Customer, Integer> {
 
 	List<Customer> findByFirstName(String firstName);
-
-	List<Customer> findAllList(PageRequest pageRequest);
 
 	/**
 	 *

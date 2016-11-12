@@ -1,6 +1,7 @@
 package me.jclagache.data.mybatis.repository.support;
 
 import me.jclagache.data.mybatis.repository.MyBatisPagingAndSortingRepository;
+import me.jclagache.data.mybatis.repository.query.MyBatisPage;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,15 +33,12 @@ public class MyBatisPagingAndSortingRepositoryImpl<T, ID extends Serializable>
 
     @Override
     public Page<T> findAll(Pageable pageable) {
-        Map<String, ID> params = new HashMap<>();
-        List<T> results = sessionTemplate.selectList(mappedStatementId, params);
-        return new PageImpl(results, new PageRequest(pageable.getPageNumber()+1, 0), count());
+        List<T> results = sessionTemplate.selectList(mappedStatementId, new HashMap<>());
+        return new MyBatisPage(results, new PageRequest(pageable.getPageNumber()+1, 0), (int)count());
     }
 
     public List<T> findAllList(Pageable pageable) {
-        Map<String, ID> params = new HashMap<>();
-        List<T> results = sessionTemplate.selectList(mappedStatementId, params);
-        return results;
+        return findAllList(pageable);
     }
 
     @Override
@@ -56,11 +54,6 @@ public class MyBatisPagingAndSortingRepositoryImpl<T, ID extends Serializable>
     @Override
     public boolean exists(Serializable serializable) {
         return false;
-    }
-
-    @Override
-    public Iterable<T> findAll() {
-        return null;
     }
 
     @Override
