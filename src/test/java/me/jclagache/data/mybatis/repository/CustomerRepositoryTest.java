@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -43,8 +44,9 @@ public class CustomerRepositoryTest {
 		//TODO: should attach to the find mapping, and not need an distinct mapper definition
 		Iterable<Customer> customers = customerRepository.findAllList(pageRequest);
 		assertNotNull(customers);
-		assertTrue(customers.iterator().hasNext());
-		assertFalse(customers.iterator().hasNext());
+		Iterator<Customer> it = customers.iterator();
+		it.next();
+		assertFalse(it.hasNext());
 	}
 	
 	@Test

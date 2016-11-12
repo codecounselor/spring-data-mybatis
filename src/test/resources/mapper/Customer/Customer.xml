@@ -48,9 +48,6 @@
 		FROM
 		customer, address
 		WHERE customer.id = address.customer_id
-		<if test="pk">
-			AND customer.id = #{pk.value}
-		</if>
 	</select>
 
 	<select id="findByFirstName" resultMap="customerResultMap" parameterType="string">

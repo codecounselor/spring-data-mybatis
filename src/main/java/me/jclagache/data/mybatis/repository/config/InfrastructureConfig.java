@@ -1,6 +1,8 @@
 package me.jclagache.data.mybatis.repository.config;
 
 import me.jclagache.data.mybatis.repository.MyBatisRepository;
+import me.jclagache.data.mybatis.repository.support.SpringDataMyBatisPlugin;
+import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -50,6 +52,7 @@ public class InfrastructureConfig {
 		sessionFactory.setDataSource(dataSource);
 		sessionFactory.setTypeAliasesPackage(aliases);
 		sessionFactory.setMapperLocations(getResources(resourceLoader, "classpath*:mapper/**/*.xml"));
+		sessionFactory.setPlugins(new Interceptor[]{new SpringDataMyBatisPlugin()});
 		return sessionFactory.getObject();
 	}
 
